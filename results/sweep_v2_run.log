@@ -1,0 +1,56 @@
+Sweep v2 | cores=8 beam=200 mc_n=5000 λ=0.01 λ_L3=0.015
+Loading prices + building/loading atoms_v2...
+Atoms total=849 searchable=789 (build/load 0.1s)
+Splits: train=6318d val=3778d hold=4195d
+L1 beam search...
+  L1: scored=1143 dropped_regime=255 beam_keep=200
+  L1 done in 0.6s  top: asp_pluto_uranus_sextile_orb3 fit=+0.4415
+L2 beam search (AND pairs + moon ORs)...
+  L2: scored=17901 kept=17901 dropped_regime=0 beam_keep=200
+  L2 done in 13.1s
+L3 beam search (L2 ⊕ L1)...
+  L3: scored=23361 kept=23361 dropped_regime=0 beam_keep=200
+  L3 done in 19.8s
+Unique ranked=600; attaching split-half stability...
+  Stable survivors (XS>0 in both val halves): 61
+Attaching holdout (report-only)...
+Monte Carlo null n=5000 on 40 targets (30 stable + 10 unstable)...
+  [1/40] asp_jupiter_saturn_square_orb5 & ~mercury_sign_can fit=+0.375 stable=True p=0.0062
+  [5/40] asp_mercury_neptune_sextile_orb5 & ~venus_sign_tau fit=+0.335 stable=True p=0.0004
+  [10/40] ~asp_mars_sun_sextile_orb3 & asp_mercury_neptune_s fit=+0.300 stable=True p=0.0004
+  [15/40] asp_mercury_neptune_sextile_orb5 & ~asp_saturn_ven fit=+0.285 stable=True p=0.0004
+  [20/40] asp_jupiter_saturn_square_orb5                     fit=+0.218 stable=True p=0.0282
+  [25/40] ~asp_neptune_venus_sextile_orb3                    fit=+0.087 stable=True p=0.0004
+  [30/40] ~asp_neptune_venus_sextile_orb1                    fit=+0.038 stable=True p=0.0020
+  [35/40] ~asp_moon_saturn_trine_orb1 & asp_pluto_uranus_sex fit=+0.547 stable=False p=0.0008
+  [40/40] ~asp_moon_saturn_trine_orb1 & asp_pluto_uranus_sex fit=+0.539 stable=False p=0.0008
+  MC done in 9.5s
+Chart: /workspace/astro-market-alpha/results/sweep_v2_top_equity.png
+
+========================================================================
+SWEEP V2 SUMMARY
+========================================================================
+Runtime 43.5s | cores=8 | atoms 849/789 | ranked 600 | stable 61
+Results: /workspace/astro-market-alpha/results/sweep_v2.md
+CSV:     /workspace/astro-market-alpha/results/sweep_v2.csv
+
+rule                                                 fit stab    hold       p  bar
+------------------------------------------------------------------------------------------
+asp_jupiter_saturn_square_orb5 & ~mercury_sign_c  +0.375    Y  -0.601  0.0062  YES
+asp_mercury_neptune_sextile_orb5 & ~moon_phase_w  +0.339    Y  -0.539  0.0002  YES
+asp_jupiter_saturn_square_orb5 & ~sun_sign_cance  +0.336    Y  -0.563  0.0116  YES
+~asp_mercury_moon_trine_orb5 & asp_mercury_neptu  +0.336    Y  -0.492  0.0002  YES
+asp_mercury_neptune_sextile_orb5 & ~venus_sign_t  +0.335    Y  -0.355  0.0004  YES
+asp_mercury_neptune_sextile_orb5 & ~mars_ingress  +0.318    Y  -0.774  0.0006  YES
+~mercury_sign_aquarius & ~neptune_retro           +0.313    Y  -0.114  0.0010  YES
+~asp_neptune_venus_sextile_orb3 & ~neptune_retro  +0.309    Y  -0.392  0.0002  YES
+mars_sign_aries & ~sun_sign_aquarius              +0.302    Y  -0.266  0.0010  YES
+~asp_mars_sun_sextile_orb3 & asp_mercury_neptune  +0.300    Y  -0.424  0.0004  YES
+~asp_mercury_neptune_trine_orb5 & mars_sign_virg  +0.299    Y  -0.324  0.0018  YES
+asp_jupiter_pluto_square_orb3 & ~mars_ingress_5d  +0.294    Y  -0.820  0.0032  YES
+asp_mercury_neptune_sextile_orb5 & ~jupiter_ingr  +0.290    Y  -0.502  0.0008  YES
+asp_jupiter_pluto_square_orb3 & ~asp_mars_moon_s  +0.289    Y  -0.581  0.0044  YES
+asp_mercury_neptune_sextile_orb5 & ~asp_saturn_v  +0.285    Y  -0.542  0.0004  YES
+
+Verdict: stable+null clears exist, but NONE with holdout XS>0.
+========================================================================

@@ -12,8 +12,10 @@ def main() -> None:
             "  python -m astro_market folklore [args...]\n"
             "  python -m astro_market null [args...]\n"
             "  python -m astro_market search [args...]\n"
+            "  python -m astro_market sweep [args...]\n"
             "  python -m astro_market fetch-data\n"
             "  python -m astro_market build-atoms\n"
+            "  python -m astro_market build-atoms-v2\n"
             "  python -m astro_market ensure-ephemeris\n"
         )
         sys.exit(1)
@@ -34,6 +36,10 @@ def main() -> None:
         from astro_market.search import main as search_main
 
         search_main()
+    elif cmd == "sweep":
+        from astro_market.sweep import main as sweep_main
+
+        sweep_main()
     elif cmd == "fetch-data":
         from astro_market.data import fetch_and_cache_prices
 
@@ -46,6 +52,13 @@ def main() -> None:
         prices = load_prices()
         path = build_and_cache_atoms(prices.index)
         print(f"Cached atoms -> {path}")
+    elif cmd == "build-atoms-v2":
+        from astro_market.atoms import build_and_cache_atoms_v2
+        from astro_market.data import load_prices
+
+        prices = load_prices()
+        path = build_and_cache_atoms_v2(prices.index, force=True)
+        print(f"Cached atoms v2 -> {path} ({__import__('pandas').read_parquet(path).shape[1]} cols)")
     elif cmd == "ensure-ephemeris":
         from astro_market.ephemeris import ensure_ephemeris
 

@@ -2,7 +2,7 @@
 
 Walk-forward evaluation of **simple astrological indicator rules** versus **S&P 500 buy-and-hold**.
 
-This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 adds exhaustive Boolean lattice search (length-1/2, no GA).**
+This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 lattice search**; **v2 beam sweep** (L1→L2→L3, regime/episode filters, split-half stability).
 
 ## Protocol (defaults)
 
@@ -50,7 +50,7 @@ Atoms (geocentric tropical approximation):
 - Aspects conj/opp/square/trine/sextile with orb ≤ 3°
 - Ingress flags for 1d / 3d / 5d windows
 
-Planets: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn.
+Planets: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn (+ Uranus/Neptune/Pluto for aspects/stations/ingress in sweep v2; outer-planet *sign* atoms excluded from search).
 
 ## Commands
 
@@ -77,6 +77,10 @@ python -m astro_market null --rule moon_phase_new --n 200 --scan-length1
 python -m astro_market search --max-length 2
 # defaults: --top-k 50 (L1→L2 pairing), negations on, moon OR pairs on, MC n=1000
 # writes results/lattice_v1.md and results/lattice_v1.csv
+
+# 6) Sweep v2 — longer beam search L1→L2→L3 with regime/episode filters
+python -m astro_market build-atoms-v2   # ~800–2500 atoms → data/atoms_v2.parquet
+python -m astro_market sweep            # beam=200, MC n=5000; results/sweep_v2.md
 ```
 
 Network failures print a clear error and exit non-zero; prefer using the parquet caches under `data/`.

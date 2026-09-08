@@ -201,3 +201,42 @@ def moon_phase_from_elongation(sun_lon: np.ndarray, moon_lon: np.ndarray) -> np.
 def sign_index(lon: np.ndarray | pd.Series) -> np.ndarray:
     """Sign index 0..11 from ecliptic longitude."""
     return np.floor(np.asarray(lon, dtype=float) / 30.0).astype(int) % 12
+
+# --- Sweep v2 extensions ---
+
+OUTER_PLANETS = ["uranus", "neptune", "pluto"]
+ALL_PLANETS_V2 = [
+    "sun", "moon", "mercury", "venus", "mars",
+    "jupiter", "saturn", "uranus", "neptune", "pluto",
+]
+FAST_PLANETS = ["sun", "moon", "mercury", "venus", "mars"]
+# Outer-planet *sign* atoms are regime features — compute for analysis, exclude from search.
+REGIME_SIGN_PLANETS = ["jupiter", "saturn", "uranus", "neptune", "pluto"]
+
+# Register outer planets into PLANET_BODIES (barycenters in de421)
+PLANET_BODIES.setdefault("uranus", "uranus barycenter")
+PLANET_BODIES.setdefault("neptune", "neptune barycenter")
+PLANET_BODIES.setdefault("pluto", "pluto barycenter")
+
+MOON_PHASE_8 = [
+    "new",
+    "waxing_crescent",
+    "first_quarter",
+    "waxing_gibbous",
+    "full",
+    "waning_gibbous",
+    "last_quarter",
+    "waning_crescent",
+]
+
+
+def moon_phase_8_from_elongation(sun_lon: np.ndarray, moon_lon: np.ndarray) -> np.ndarray:
+    """
+    8-bucket moon phase from elongation (moon - sun) mod 360.
+    Buckets of 45°: new, waxing_crescent, first_quarter, waxing_gibbous,
+    full, waning_gibbous, last_quarter, waning_crescent.
+    """
+    elong = (np.asarray(moon_lon) - np.asarray(sun_lon)) % 360.0
+    idx = np.floor(elong / 45.0).astype(int) % 8
+    labels = np.array(MOON_PHASE_8, dtype=object)
+    return labels[idx]

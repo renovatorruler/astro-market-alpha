@@ -55,3 +55,13 @@ folklore_rules:
   - "mercury_retro"
   - "~mercury_retro"
   - "moon_phase_new | moon_phase_full"
+
+atoms_v2:
+  cache_path: "data/atoms_v2.parquet"
+  aspect_orbs: [1.0, 3.0, 5.0]
+
+sweep_v2:
+  beam: 200
+  lambda_l3: 0.015
+  mc_n: 5000
+  max_episode_days: 400
