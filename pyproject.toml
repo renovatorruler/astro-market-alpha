@@ -28,6 +28,7 @@ dev = [
 [project.scripts]
 astro-folklore = "astro_market.folklore:main"
 astro-null = "astro_market.null:main"
+astro-search = "astro_market.search:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

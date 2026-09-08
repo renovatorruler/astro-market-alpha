@@ -2,7 +2,7 @@
 
 Walk-forward evaluation of **simple astrological indicator rules** versus **S&P 500 buy-and-hold**.
 
-This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. **No genetic algorithm / search in v1.**
+This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 adds exhaustive Boolean lattice search (length-1/2, no GA).**
 
 ## Protocol (defaults)
 
@@ -72,6 +72,11 @@ python -m astro_market null --rule moon_phase_new --n 1000
 
 # Optional: null for best length-1 atom scan
 python -m astro_market null --rule moon_phase_new --n 200 --scan-length1
+
+# 5) Boolean lattice search (length-1 + length-2 AND; validation-only selection)
+python -m astro_market search --max-length 2
+# defaults: --top-k 50 (L1→L2 pairing), negations on, moon OR pairs on, MC n=1000
+# writes results/lattice_v1.md and results/lattice_v1.csv
 ```
 
 Network failures print a clear error and exit non-zero; prefer using the parquet caches under `data/`.
@@ -105,7 +110,7 @@ These are **research heuristics**, not investment advice:
 4. **Complexity:** prefer lower `complexity` (fitness already penalizes it).
 5. **Costs:** results must use the default 10 bps/side (or explicitly higher) — zero-cost wins are not counted.
 
-v1 does **not** include genetic search / GA over rule space.
+Lattice search (`search`) enumerates length-1/2 Boolean rules only — **no genetic algorithm**.
 
 ## Tests (offline)
 
@@ -134,12 +139,15 @@ astro-market-alpha/
     evaluate.py      # metrics, fitness, embargo helper
     folklore.py      # folklore CLI
     null.py          # Monte Carlo null CLI
+    search.py        # Boolean lattice search (L1/L2) + MC
     config.py        # YAML loader
   tests/
     test_rules.py
     test_evaluate.py
     test_atoms_fixture.py
+    test_search.py
   data/              # prices, atoms, de421.bsp caches
+  results/           # lattice_v1.md / lattice_v1.csv
 ```
 
 ## Modules (API sketch)
@@ -154,6 +162,7 @@ astro-market-alpha/
 | `evaluate` | `evaluate_rule` → metrics; `fitness`; `embargo_split` |
 | `folklore` | CLI table over protocol splits |
 | `null` | Circular-shift null + optional best length-1 scan hook |
+| `search` | Length-1/2 Boolean lattice; val-only selection; holdout report; MC |
 
 ## Caveats
 

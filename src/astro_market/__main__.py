@@ -11,6 +11,7 @@ def main() -> None:
             "Usage:\n"
             "  python -m astro_market folklore [args...]\n"
             "  python -m astro_market null [args...]\n"
+            "  python -m astro_market search [args...]\n"
             "  python -m astro_market fetch-data\n"
             "  python -m astro_market build-atoms\n"
             "  python -m astro_market ensure-ephemeris\n"
@@ -29,6 +30,10 @@ def main() -> None:
         from astro_market.null import main as null_main
 
         null_main()
+    elif cmd == "search":
+        from astro_market.search import main as search_main
+
+        search_main()
     elif cmd == "fetch-data":
         from astro_market.data import fetch_and_cache_prices
 
