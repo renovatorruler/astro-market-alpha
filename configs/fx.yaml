@@ -1,0 +1,52 @@
+# FX risk-management protocol — NEVER tune on holdout.
+#
+# Model: each signal risks a fixed fraction of equity with fixed SL/TP.
+# Rising-edge entries at next bar open. Spreads in pips. Concurrent + total-risk caps.
+
+fx:
+  pairs:
+    - EURUSD
+    - GBPUSD
+    - USDJPY
+    - AUDUSD
+    - USDCAD
+    - USDCHF
+    - NZDUSD
+  cache_dir: "data/fx"
+  # yfinance history for FX often starts ~2003–2005 depending on pair;
+  # document actual span after first fetch.
+  fetch_start: "2000-01-01"
+  initial_equity: 100000.0
+  default_side: "long"   # long | short | both
+
+  risk:
+    risk_pct: 0.005          # 0.5% equity per trade
+    sl_atr: 1.5              # SL = 1.5 × ATR(14)
+    atr_period: 14
+    sl_pips_fallback: 50.0   # used when ATR not yet available
+    tp_R: 2.0                # TP = 2R
+    time_stop: 10            # bars; null to disable
+    max_concurrent: 5
+    max_total_risk_pct: 0.05 # ~5% equity at risk across open trades
+
+  costs:
+    spread_pips: 1.0         # round-trip charged via adverse fills + SL/TP half
+
+  folklore_rules:
+    - "moon_phase_new"
+    - "moon_phase_full"
+    - "mercury_retro"
+    - "~mercury_sign_aquarius"
+
+# Protocol splits (FX calendar). Train may be truncated by actual data start.
+splits:
+  train: ["2000-01-01", "2014-12-31"]
+  validation: ["2015-01-01", "2019-12-31"]
+  holdout: ["2020-01-01", null]  # null = present — NEVER tune on holdout
+
+# Atoms reuse the equity-project cache (date-aligned).
+atoms:
+  cache_path: "data/atoms.parquet"
+
+ephemeris:
+  bsp_path: "data/de421.bsp"

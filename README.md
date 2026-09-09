@@ -1,6 +1,6 @@
 # Astro Market Alpha
 
-Walk-forward evaluation of **simple astrological indicator rules** versus **S&P 500 buy-and-hold**.
+Walk-forward evaluation of **simple astrological indicator rules** versus **S&P 500 buy-and-hold**, plus an **FX risk-management backtest** (fixed fractional risk, SL/TP, rising-edge entries).
 
 This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 lattice search**; **v2 beam sweep** (L1→L2→L3, regime/episode filters, split-half stability); **v3** heavier beam (L1→L4, beam=500), Nasdaq cross-asset must-pass, MC n=50k.
 
@@ -87,6 +87,12 @@ python -m astro_market sweep --version 3
 # or: python -m astro_market sweep-v3
 # flags: --beam 500 --max-length 4 --null-n 50000
 # writes results/sweep_v3.md, sweep_v3.csv, sweep_v3_run.log, sweep_v3_top_equity.png
+
+# 8) FX risk-management framework (fixed fractional risk, SL/TP — not index long/flat)
+python -m astro_market fetch-fx
+python -m astro_market fx-folklore
+python -m astro_market fx-sim --rule moon_phase_new --side long
+# caches: data/fx/*.parquet; docs: results/fx_framework.md; config: configs/fx.yaml
 ```
 
 Network failures print a clear error and exit non-zero; prefer using the parquet caches under `data/`.
@@ -131,6 +137,7 @@ pytest -q
 - Rule parsing / evaluation
 - `evaluate_rule` on synthetic returns & atoms (no network)
 - Atom builder from mocked longitudes; live ephemeris test skipped if `de421.bsp` unavailable
+- FX: sizing / JPY pip value, rising-edge, TP/SL, no lookahead, concurrent & risk caps (`tests/fx/`)
 
 ## Layout
 
@@ -173,6 +180,22 @@ astro-market-alpha/
 | `folklore` | CLI table over protocol splits |
 | `null` | Circular-shift null + optional best length-1 scan hook |
 | `search` | Length-1/2 Boolean lattice; val-only selection; holdout report; MC |
+
+
+## FX risk-management framework
+
+FX is **not** modelled as all-in index trading. Each rising-edge signal risks a **fixed fraction of equity** with **fixed SL/TP**:
+
+| Item | Default |
+|------|---------|
+| Pairs | EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, USDCHF, NZDUSD (`data/fx/*.parquet`) |
+| Risk | 0.5% equity per trade; size so SL ≈ risk |
+| SL / TP | 1.5×ATR(14) (fixed-pips fallback); TP = 2R; optional time-stop 10 bars |
+| Entry | Rising-edge only → next bar open; long and/or short |
+| Costs / caps | Spreads in pips; max concurrent; max total risk-on ~5% |
+| Splits | Train ~2000–2014, val 2015–2019, holdout 2020–present (**never tune on holdout**) |
+
+See `results/fx_framework.md` for lot/pip-value math and lifecycle. Equity lattice/sweep code is unchanged.
 
 ## Caveats
 

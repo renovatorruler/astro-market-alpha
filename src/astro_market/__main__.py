@@ -46,6 +46,9 @@ def main() -> None:
             "  python -m astro_market build-atoms\n"
             "  python -m astro_market build-atoms-v2\n"
             "  python -m astro_market ensure-ephemeris\n"
+            "  python -m astro_market fetch-fx\n"
+            "  python -m astro_market fx-folklore [args...]\n"
+            "  python -m astro_market fx-sim --rule ... [args...]\n"
         )
         sys.exit(1)
 
@@ -102,6 +105,22 @@ def main() -> None:
 
         path = ensure_ephemeris()
         print(f"Ephemeris ready -> {path}")
+    elif cmd == "fetch-fx":
+        from astro_market.fx.data import fetch_all_fx, load_fx_config
+
+        cfg = load_fx_config()
+        start = cfg.get("fx", {}).get("fetch_start", "2000-01-01")
+        paths = fetch_all_fx(start=start, cfg=cfg)
+        for pair, path in paths.items():
+            print(f"Cached FX {pair} -> {path}")
+    elif cmd == "fx-folklore":
+        from astro_market.fx.folklore import main as fx_folklore_main
+
+        fx_folklore_main()
+    elif cmd == "fx-sim":
+        from astro_market.fx.folklore import sim_main
+
+        sim_main()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)
