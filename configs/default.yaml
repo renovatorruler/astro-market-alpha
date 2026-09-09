@@ -65,3 +65,15 @@ sweep_v2:
   lambda_l3: 0.015
   mc_n: 5000
   max_episode_days: 400
+
+nasdaq:
+  ticker: "^IXIC"
+  price_col: "Adj Close"
+  cache_path: "data/ixic_adj_close.parquet"
+
+sweep_v3:
+  beam: 500
+  max_length: 4
+  lambda_l3: 0.015
+  mc_n: 50000
+  max_episode_days: 400

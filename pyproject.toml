@@ -30,6 +30,7 @@ astro-folklore = "astro_market.folklore:main"
 astro-null = "astro_market.null:main"
 astro-search = "astro_market.search:main"
 astro-sweep = "astro_market.sweep:main"
+astro-sweep-v3 = "astro_market.sweep_v3:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

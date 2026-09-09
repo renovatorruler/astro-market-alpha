@@ -5,6 +5,34 @@ from __future__ import annotations
 import sys
 
 
+def _pop_version_flag(argv: list[str]) -> tuple[list[str], int | None]:
+    """Remove --version N or --version=N from argv; return (new_argv, version|None)."""
+    out: list[str] = []
+    version: int | None = None
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--version" and i + 1 < len(argv):
+            try:
+                version = int(argv[i + 1])
+            except ValueError:
+                out.append(a)
+                i += 1
+                continue
+            i += 2
+            continue
+        if a.startswith("--version="):
+            try:
+                version = int(a.split("=", 1)[1])
+            except ValueError:
+                out.append(a)
+            i += 1
+            continue
+        out.append(a)
+        i += 1
+    return out, version
+
+
 def main() -> None:
     if len(sys.argv) < 2:
         print(
@@ -12,7 +40,8 @@ def main() -> None:
             "  python -m astro_market folklore [args...]\n"
             "  python -m astro_market null [args...]\n"
             "  python -m astro_market search [args...]\n"
-            "  python -m astro_market sweep [args...]\n"
+            "  python -m astro_market sweep [--version 2|3] [args...]\n"
+            "  python -m astro_market sweep-v3 [args...]\n"
             "  python -m astro_market fetch-data\n"
             "  python -m astro_market build-atoms\n"
             "  python -m astro_market build-atoms-v2\n"
@@ -21,8 +50,21 @@ def main() -> None:
         sys.exit(1)
 
     cmd = sys.argv[1]
+    rest = sys.argv[2:]
+
+    if cmd in ("sweep", "sweep-v3"):
+        rest, ver = _pop_version_flag(rest)
+        version = 3 if cmd == "sweep-v3" else (ver if ver is not None else 2)
+        sys.argv = [f"astro_market.{cmd}"] + rest
+        if version >= 3:
+            from astro_market.sweep_v3 import main as sweep_main
+        else:
+            from astro_market.sweep import main as sweep_main
+        sweep_main()
+        return
+
     # Shift argv so submodules see their own flags
-    sys.argv = [f"astro_market.{cmd}"] + sys.argv[2:]
+    sys.argv = [f"astro_market.{cmd}"] + rest
 
     if cmd == "folklore":
         from astro_market.folklore import main as folklore_main
@@ -36,10 +78,6 @@ def main() -> None:
         from astro_market.search import main as search_main
 
         search_main()
-    elif cmd == "sweep":
-        from astro_market.sweep import main as sweep_main
-
-        sweep_main()
     elif cmd == "fetch-data":
         from astro_market.data import fetch_and_cache_prices
 

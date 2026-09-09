@@ -1,0 +1,54 @@
+Sweep v3 | cores=8 workers=8 beam=500 max_length=4 mc_n=50000 λ=0.01 λ_L3+=0.015
+Loading SPX + Nasdaq + atoms_v2...
+Atoms total=849 searchable=789 (build/load 0.1s); aligned days=14013; splits train/val/hold=6040/3778/4195
+L1 beam search...
+  L1: scored=1143 dropped_regime=255 beam_keep=500
+L2 beam search...
+  L2: scored=112299 kept=112299 dropped_regime=0 beam_keep=500
+L3 beam search...
+  L3: scored=180103 kept=180103 dropped_regime=0 beam_keep=500
+L4 beam search...
+  L4: scored=215401 kept=215401 dropped_regime=0 beam_keep=500
+Unique ranked=2000; attaching SPX split-half stability...
+Attaching SPX holdout (report-only)...
+Attaching Nasdaq val+holdout + cross-asset filter...
+  Stable(SPX halves)=50 cross_asset=1603 cross_asset+stable=41
+Monte Carlo null n=50000 on 35 targets (25 cross-stable + 10 unstable) workers=8...
+  MC probe: 0.09s/2k → est wall 10s
+  [1/35] ~uranus_retro & venus_sign_libra                 p=0.0000
+  [5/35] asp_jupiter_saturn_square_orb5                   p=0.0279
+  [10/35] ~sun_sign_virgo                                  p=0.0511
+  [15/35] ~asp_neptune_venus_sextile_orb1                  p=0.0016
+  [20/35] ~asp_mercury_pluto_sextile_orb5                  p=0.0728
+  [25/35] ~asp_jupiter_sun_sextile_orb3                    p=0.0527
+  [30/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranu p=0.0000
+  [35/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranu p=0.0000
+Chart: /workspace/astro-market-alpha/results/sweep_v3_top_equity.png
+
+========================================================================
+SWEEP V3 SUMMARY
+========================================================================
+Runtime 2126.9s | cores=8 workers=8 | atoms 849/789 | ranked 2000 | stable 50 | cross 1603 | cross+stable 41
+Results: /workspace/astro-market-alpha/results/sweep_v3.md
+CSV:     /workspace/astro-market-alpha/results/sweep_v3.csv
+
+rule                                          fit    ndq st x   hold       p  bar
+------------------------------------------------------------------------------------------
+asp_pluto_sun_trine_orb5 & venus_ingress_5 +0.505 +0.143  Y Y -1.007  0.0000  X+NULL
+asp_jupiter_saturn_square_orb5 & ~jupiter_ +0.490 +0.428  Y Y -0.735  0.0023  X+NULL
+asp_jupiter_saturn_square_orb5 & ~jupiter_ +0.449 +0.286  Y Y -0.699  0.0048  X+NULL
+~uranus_retro & venus_sign_libra           +0.400 +0.499  Y Y -1.014  0.0000  X+NULL
+asp_pluto_sun_trine_orb5 & venus_ingress_5 +0.383 +0.038  Y Y -1.037  0.0000  X+NULL
+asp_jupiter_saturn_square_orb5 & ~mercury_ +0.375 +0.293  Y Y -0.601  0.0060  X+NULL
+asp_jupiter_saturn_square_orb5             +0.218 +0.024  Y Y -0.572  0.0279  X+NULL
+~mercury_sign_libra                        +0.162 +0.152  Y Y -0.088  0.0023  X+NULL
+~neptune_retro                             +0.144 +0.041  Y Y -0.276  0.0224  X+NULL
+asp_mars_mercury_trine_orb5                +0.126 +0.085  Y Y -0.953  0.0118  X+NULL
+~mercury_sign_aquarius                     +0.102 +0.155  Y Y +0.134  0.0206  FULL
+~asp_neptune_venus_sextile_orb3            +0.087 +0.174  Y Y -0.094  0.0009  X+NULL
+~sun_sign_virgo                            +0.057 +0.040  Y Y -0.006  0.0511  no
+~asp_jupiter_venus_trine_orb3              +0.043 +0.086  Y Y -0.011  0.0231  X+NULL
+~asp_neptune_venus_sextile_orb1            +0.038 +0.072  Y Y -0.063  0.0016  X+NULL
+
+Verdict: ≥1 FULL-BAR survivor (SPX halves + NDQ val + null + SPX holdout).
+========================================================================

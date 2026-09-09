@@ -2,7 +2,7 @@
 
 Walk-forward evaluation of **simple astrological indicator rules** versus **S&P 500 buy-and-hold**.
 
-This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 lattice search**; **v2 beam sweep** (L1→L2→L3, regime/episode filters, split-half stability).
+This is a disciplined research scaffold (v1): fixed protocol splits, transaction costs, boolean “atoms” from a tropical geocentric ephemeris, a tiny rule DSL, folklore baselines, and a circular-shift Monte Carlo null. v1 folklore + null baselines; **v1.1 lattice search**; **v2 beam sweep** (L1→L2→L3, regime/episode filters, split-half stability); **v3** heavier beam (L1→L4, beam=500), Nasdaq cross-asset must-pass, MC n=50k.
 
 ## Protocol (defaults)
 
@@ -81,6 +81,12 @@ python -m astro_market search --max-length 2
 # 6) Sweep v2 — longer beam search L1→L2→L3 with regime/episode filters
 python -m astro_market build-atoms-v2   # ~800–2500 atoms → data/atoms_v2.parquet
 python -m astro_market sweep            # beam=200, MC n=5000; results/sweep_v2.md
+
+# 7) Sweep v3 — L1→L4 beam=500, Nasdaq (^IXIC) must-pass, MC n=50000
+python -m astro_market sweep --version 3
+# or: python -m astro_market sweep-v3
+# flags: --beam 500 --max-length 4 --null-n 50000
+# writes results/sweep_v3.md, sweep_v3.csv, sweep_v3_run.log, sweep_v3_top_equity.png
 ```
 
 Network failures print a clear error and exit non-zero; prefer using the parquet caches under `data/`.

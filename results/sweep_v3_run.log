@@ -1,0 +1,62 @@
+2026-09-09 01:13:48 Sweep v3 | cores=8 workers=8 beam=500 max_length=4 mc_n=50000 λ=0.01 λ_L3+=0.015
+2026-09-09 01:13:48 START
+2026-09-09 01:13:48 Loading SPX + Nasdaq + atoms_v2
+2026-09-09 01:13:48 Atoms total=849 searchable=789 (build/load 0.1s); aligned days=14013; splits train/val/hold=6040/3778/4195
+2026-09-09 01:13:48 L1 start
+2026-09-09 01:13:49 L1 done 0.5s beam=500 top=asp_pluto_uranus_sextile_orb3
+2026-09-09 01:13:49 L2 start
+2026-09-09 01:18:42 L2 done 293.1s beam=500
+2026-09-09 01:18:42 L3 start
+2026-09-09 01:31:00 L3 done 738.0s beam=500
+2026-09-09 01:31:00 L4 start
+2026-09-09 01:34:01 L4 checkpoint scored=84000 kept=84000
+2026-09-09 01:37:02 L4 checkpoint scored=122000 kept=122000
+2026-09-09 01:40:05 L4 checkpoint scored=151000 kept=151000
+2026-09-09 01:43:07 L4 checkpoint scored=175500 kept=175500
+2026-09-09 01:46:10 L4 checkpoint scored=197000 kept=197000
+2026-09-09 01:49:00 L4: scored=215401 kept=215401 dropped_regime=0 beam_keep=500
+2026-09-09 01:49:01 L4 done 1080.9s beam=500
+2026-09-09 01:49:01 Stability on 2000 ranked
+2026-09-09 01:49:01 Nasdaq attach
+2026-09-09 01:49:02 stable=50 cross_asset=1603 cross_stable=41
+2026-09-09 01:49:02 MC start n=50000 targets=35
+2026-09-09 01:49:02 MC probe: 0.09s per 2k → est wall 10s for n=50000
+2026-09-09 01:49:05 MC [1/35] ~uranus_retro & venus_sign_libra p=0.0000
+2026-09-09 01:49:05 MC [2/35] asp_jupiter_saturn_square_orb5 & ~jupiter_retro & ~mercury_s p=0.0023
+2026-09-09 01:49:05 MC [3/35] ~mercury_sign_libra p=0.0023
+2026-09-09 01:49:05 MC [4/35] asp_pluto_sun_trine_orb5 & venus_ingress_5d p=0.0000
+2026-09-09 01:49:05 MC [5/35] asp_jupiter_saturn_square_orb5 p=0.0279
+2026-09-09 01:49:05 MC [6/35] asp_jupiter_saturn_square_orb5 & ~mercury_sign_cancer p=0.0060
+2026-09-09 01:49:05 MC [7/35] asp_pluto_sun_trine_orb5 & venus_ingress_5d & ~venus_sign_ar p=0.0000
+2026-09-09 01:49:05 MC [8/35] asp_jupiter_saturn_square_orb5 & ~jupiter_retro p=0.0048
+2026-09-09 01:49:07 MC [9/35] ~neptune_retro p=0.0224
+2026-09-09 01:49:07 MC [10/35] ~sun_sign_virgo p=0.0511
+2026-09-09 01:49:07 MC [11/35] asp_mars_mercury_trine_orb5 p=0.0118
+2026-09-09 01:49:07 MC [12/35] ~asp_neptune_venus_sextile_orb3 p=0.0009
+2026-09-09 01:49:07 MC [13/35] ~mercury_sign_aquarius p=0.0206
+2026-09-09 01:49:07 MC [14/35] ~asp_jupiter_venus_trine_orb3 p=0.0231
+2026-09-09 01:49:07 MC [15/35] ~asp_neptune_venus_sextile_orb1 p=0.0016
+2026-09-09 01:49:07 MC [16/35] ~asp_jupiter_venus_trine_orb5 p=0.0503
+2026-09-09 01:49:10 MC [17/35] mercury_sign_sagittarius p=0.0519
+2026-09-09 01:49:10 MC [18/35] ~mercury_sign_gemini p=0.1318
+2026-09-09 01:49:10 MC [19/35] ~asp_mercury_pluto_sextile_orb3 p=0.0387
+2026-09-09 01:49:10 MC [20/35] ~asp_mercury_pluto_sextile_orb5 p=0.0728
+2026-09-09 01:49:10 MC [21/35] ~asp_neptune_sun_opp_orb5 p=0.0465
+2026-09-09 01:49:10 MC [22/35] ~asp_saturn_sun_trine_orb3 p=0.0576
+2026-09-09 01:49:10 MC [23/35] ~asp_saturn_venus_sextile_orb5 p=0.0779
+2026-09-09 01:49:10 MC [24/35] ~asp_jupiter_venus_square_orb3 p=0.0598
+2026-09-09 01:49:12 MC [25/35] ~asp_jupiter_sun_sextile_orb3 p=0.0527
+2026-09-09 01:49:12 MC [26/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [27/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [28/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [29/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [30/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [31/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:12 MC [32/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0002
+2026-09-09 01:49:14 MC [33/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:14 MC [34/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:15 MC [35/35] ~asp_mars_pluto_sextile_orb3 & asp_neptune_uranus_conj_orb5  p=0.0000
+2026-09-09 01:49:15 MC done 12.3s mc_n=50000 workers=8 elapsed=12.3s
+2026-09-09 01:49:15 DONE runtime=2126.9s
+
+2026-09-09 01:50:00 ARTIFACTS written: sweep_v3.md sweep_v3.csv sweep_v3_top_equity.png (runtime 2126.9s, full-bar=2 incl almost-BH ~mercury_sign_aquarius)
