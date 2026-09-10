@@ -49,6 +49,7 @@ def main() -> None:
             "  python -m astro_market fetch-fx\n"
             "  python -m astro_market fx-folklore [args...]\n"
             "  python -m astro_market fx-sim --rule ... [args...]\n"
+            "  python -m astro_market fx-search [args...]\n"
         )
         sys.exit(1)
 
@@ -121,6 +122,10 @@ def main() -> None:
         from astro_market.fx.folklore import sim_main
 
         sim_main()
+    elif cmd == "fx-search":
+        from astro_market.fx.search import main as fx_search_main
+
+        fx_search_main()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

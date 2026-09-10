@@ -33,6 +33,7 @@ astro-sweep = "astro_market.sweep:main"
 astro-sweep-v3 = "astro_market.sweep_v3:main"
 astro-fx-folklore = "astro_market.fx.folklore:main"
 astro-fx-sim = "astro_market.fx.folklore:sim_main"
+astro-fx-search = "astro_market.fx.search:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
